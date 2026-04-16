@@ -169,7 +169,7 @@ The aim of this task is to configure default gateways and implement routing betw
 
 ## Network Topology
 
-![Network Topology](screenshots/week06-network.png)
+![Network Topology](screenshot/week06-network.png)
 
 The network consists of:
 
@@ -214,7 +214,7 @@ Each host was configured with an IP address and default gateway.
 
 #### PC1
 
-![PC1 Configuration](screenshots/week06-pc1-config.png)
+![PC1 Configuration](screenshot/week06-pc1-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.1.1 netmask 255.255.255.0 up
@@ -224,7 +224,7 @@ route -n
 
 #### PC2
 
-![PC2 Configuration](screenshots/week06-pc2-config.png)
+![PC2 Configuration](screenshot/week06-pc2-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.1.2 netmask 255.255.255.0 up
@@ -234,7 +234,7 @@ route -n
 
 #### PC3
 
-![PC3 Configuration](screenshots/week06-pc3-config.png)
+![PC3 Configuration](screenshot/week06-pc3-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.2.1 netmask 255.255.255.0 up
@@ -244,7 +244,7 @@ route -n
 
 #### PC4
 
-![PC4 Configuration](screenshots/week06-pc4-config.png)
+![PC4 Configuration](screenshot/week06-pc4-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.2.2 netmask 255.255.255.0 up
@@ -258,7 +258,7 @@ route -n
 
 #### Router1
 
-![Router1 Configuration](screenshots/week06-router1-config.png)
+![Router1 Configuration](screenshot/week06-router1-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.1.254 netmask 255.255.255.0 up
@@ -272,7 +272,7 @@ route -n
 
 #### Router2
 
-![Router2 Configuration](screenshots/week06-router2-config.png)
+![Router2 Configuration](screenshot/week06-router2-config.png)
 
 ```bash
 sudo ifconfig eth0 10.1.2.254 netmask 255.255.255.0 up
