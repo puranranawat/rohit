@@ -171,103 +171,164 @@ The task was successfully completed by creating a multi-subnet network, configur
 
 # Part B – Dynamic Routing with OSPF
 
-## Aim
-
-To observe how dynamic routing protocols automatically update routing tables and handle network changes.
-
----
-
-## Network Setup
-
-A pre-configured OSPF network template with four routers and two hosts was used.
-
-![OSPF Topology](screenshot/OSPF-Basics-12307969-network.png)
+## 1. Aim  
+The aim of this task is to observe how dynamic routing using OSPF is configured and how it automatically adapts to changes in the network. This includes analysing routing tables, identifying neighbour relationships, and verifying how traffic is redirected when a link fails.
 
 ---
 
-## Commands Used
+## 2. Network Topology  
+The network consists of two hosts and four routers configured with OSPF. The topology provides two possible paths between the hosts, allowing dynamic routing decisions.
 
-```id="ospf1"
+- Path 1: FRR1 → FRR2 → FRR4  
+- Path 2: FRR1 → FRR2 → FRR3 → FRR4  
+
+### Screenshot  
+![Network Topology](screenshots/Week04%20network%20topology1.png)
+
+---
+
+## 3. Project Setup  
+
+The OSPF template project was used and duplicated as:
+
+```
+OSPF-Basics-12313659.gns3project
+```
+
+All nodes were started in GNS3, and sufficient time was given for the routers to fully boot. Each router displayed the `frr#` prompt, confirming that FRRouting (FRR) was running successfully.
+
+No manual configuration of IP addresses or OSPF was required, as the template network was preconfigured.
+
+---
+
+## 4. Viewing OSPF Routing Information  
+
+The FRR CLI was accessed using:
+
+```bash
+vtysh
+```
+
+The following commands were used to analyse routing behaviour:
+
+### 4.1 OSPF Neighbours  
+
+```bash
 show ip ospf neighbor
 ```
 
-```id="ospf2"
+This command displayed:
+- Neighbour router IP addresses  
+- Adjacency states (FULL)  
+- Interface connections  
+
+This confirms that OSPF neighbour relationships were successfully established.
+
+---
+
+### 4.2 OSPF Routes  
+
+```bash
 show ip ospf route
 ```
 
-```id="ospf3"
+This command showed:
+- Networks learned dynamically via OSPF  
+- Route metrics (cost)  
+- Next-hop routers  
+
+---
+
+### 4.3 Routing Table  
+
+```bash
 show ip route
 ```
 
----
-
-## Observations
-
-### OSPF Neighbours
-
-![OSPF Neighbors](screenshot/OSPF-neighbor.png)
-
-* Routers automatically discover each other
-* Neighbour relationships are established
+This displayed:
+- Complete routing table  
+- OSPF routes marked with "O"  
+- Directly connected networks  
 
 ---
 
-### Routing Table
+## 5. Routing Table Analysis  
 
-![OSPF Routing](screenshot/OSPF-routing.png)
+The routing tables showed that routers dynamically learned paths to remote networks.
 
-* Routes learned dynamically
-* Next-hop routers identified
+### Summary Table  
+
+| Router | Destination Network | Next Hop |
+|--------|-------------------|----------|
+| FRR1 | Host2 Network | FRR2 |
+| FRR2 | Host2 Network | FRR4 |
+| FRR3 | Host1 Network | FRR2 |
+| FRR4 | Host1 Network | FRR2 |
+
+This confirms that OSPF selects the best available path based on network topology and metrics.
 
 ---
 
-## Path Testing
+## 6. Path Testing (Before Failure)  
 
-### Before Link Failure
+Traceroute was executed from Host1 to Host2:
 
-```id="trace1"
-traceroute <destination>
+```bash
+traceroute 10.0.6.2
 ```
 
-![Traceroute Before](screenshot/OSPF-trace-before.png)
+### Observed Path  
 
----
-
-### After Link Failure
-
-A link was disconnected using NETem.
-
-```id="trace2"
-traceroute <destination>
+```
+Host1 → FRR1 → FRR2 → FRR4 → Host2
 ```
 
-![Traceroute After](screenshot/OSPF-trace-after.png)
+This indicates that OSPF selected the shortest or lowest-cost path (top path).
+
+
 
 ---
 
-## Analysis
+## 7. Link Failure Simulation  
 
-OSPF automatically updates routing tables when network topology changes. When a link fails, the protocol recalculates the best path and reroutes traffic.
-
-This demonstrates the advantage of dynamic routing over static routing, where manual changes are not required.
+To test OSPF adaptability, the link between FRR2 and FRR4 was disconnected by stopping the corresponding NETem node. This removed the primary path between the hosts.
 
 ---
 
-## Key Concepts Learned
+## 8. Path Testing (After Failure)  
 
-* Dynamic routing
-* OSPF protocol behavior
-* Route recalculation
-* Network resilience
+Traceroute was executed again:
+
+```bash
+traceroute 10.0.6.2
+```
+
+### Observed Path  
+
+```
+Host1 → FRR1 → FRR2 → FRR3 → FRR4 → Host2
+```
+
+This demonstrates that:
+- OSPF detected the link failure  
+- Routing tables were updated automatically  
+- Traffic was redirected through the alternate path  
 
 ---
 
-## Reflection
+## 9. Observations  
 
-This task helped me understand how modern networks adapt to failures. Observing real-time routing changes provided deeper insight into network behavior.
+- OSPF automatically discovers neighbouring routers  
+- Routing tables are dynamically updated  
+- Multiple paths exist between source and destination  
+- Failover occurs without manual intervention  
+- Network communication remains uninterrupted after link failure  
 
 ---
 
-## Conclusion
+## 10. Conclusion  
 
-Dynamic routing using OSPF improves network reliability and scalability. The task successfully demonstrated automatic route management and fault tolerance.
+This task successfully demonstrated the working of dynamic routing using OSPF. The routers dynamically learned routes and selected the most efficient path for communication. When a link failure occurred, OSPF automatically recalculated routes and redirected traffic through an alternate path. This highlights the importance of dynamic routing protocols in maintaining reliable and efficient network communication.
+
+---
+
