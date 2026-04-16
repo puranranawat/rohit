@@ -183,7 +183,7 @@ The network consists of two hosts and four routers configured with OSPF. The top
 - Path 2: FRR1 → FRR2 → FRR3 → FRR4  
 
 ### Screenshot  
-![Network Topology](screenshots/Week04%20network%20topology1.png)
+![Network Topology](screenshots/Week04%20network%20topology1.png) 
 
 ---
 
