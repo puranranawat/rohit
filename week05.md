@@ -17,7 +17,7 @@ The aim of this task is to configure VLANs on a managed switch using OpenvSwitch
 
 ## Network Topology
 
-![Network Topology](screenshots/Vlan-Basics-12307969-network.png)
+![Network Topology](screenshot/Vlan-Basics-12307969-network.png)
 
 The network consists of:
 - 4 Linux Hosts (PC1, PC2, PC3, PC4)
@@ -86,7 +86,7 @@ ovs-vsctl set port eth4 tag=970
 ovs-vsctl show
 ```
 
-![VLAN Ports](screenshots/Vlan-Basics-12307969-ports.png)
+![VLAN Ports](screenshot/Vlan-Basics-12307969-ports.png)
 
 Observation:
 - eth1, eth2 → VLAN 969  
@@ -140,7 +140,7 @@ To configure VLANs on a router and enable communication between VLANs.
 
 ## Network Topology
 
-![Router Topology](screenshots/Vlan-Router-12307969-network.png)
+![Router Topology](screenshot/Vlan-Router-12307969-network.png)
 
 Components:
 - 4 Hosts  
